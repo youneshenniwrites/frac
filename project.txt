@@ -1,0 +1,60 @@
+Overview:
+——————————
+Frac (Friends and Family-Real-Admiration-Classifier) is a short-video and photo sharing platform with your friends and family.
+
+Built for: Dekstop, iOS, Android.
+
+Frac allows you to compete for the best moments of your life on its platform by awarding trophies to users for the posts having the biggest number of likes over a short period of time (Friday night to Sunday night).
+
+The number of likes are classified for a user and her followers only
+
+Using smartphone camera or laptop webcam:
+—————————————————————————————————————————
+Allow the user to share 0:30 seconds videos.
+Allow the user to share pictures.
+Allow the user to post a text message on the board.
+Allow the user to follow and being followed.
+
+Allow the user to like a post, a picture or a video(like button).
+
+Features:
+—————————
+
+1 - The like button that changes colour from grey (cold to warm) to rainbow colors depending on the number of likes.
+
+2 - Number of likes is calculated for each user and her followers for every short period of time (I propose the weekend period). The user who has the biggest number of likes (the coolest week end ever) will be awarded a trophy (also called a badge).
+
+2 - The trophy awarded to the user (the week end winner) highly depends on the total number of likes she achieved.
+Example: (prom queen: 100 likes, star of the party: 10 000 likes … etc).
+
+3 - The more famous posts she has the more chances a user has to upgrade to the next trophy.
+
+4 - The competition is disabled for the week days. Letting users make full power preparations of their next adventure.
+
+5 - Friday night at 6 pm local time (the time issue will be thought off later) the competition for the next trophy will start again. The deadline is Sunday night (6pm for instance).
+
+
+(Not yet established)
+6 - Equal opportunity (mega important): Unlike Instagram or Snapchat
+A user is not allowed to have a VIP account (Justin Bieber style on Instagram).
+Justin Bieber must create his account and start winning trophies as anybody else.
+(Problem: how can average Joe stand a chance to compete against a mega star ?)
+(Solution: competition is shradded over a number of followers range; from 0 to 100 normal people; from 10k to 10M for stars)
+(To think of: mom you may have a solution better than this)
+
+To be continued … 
+
+
+——
+Document By Younes Henni
+Date: 17 October 2017
+Location: Cambridge England
+All rights reserved.
+
+I herby declare that this is an enclosed document and that I have a copy of it elsewhere.
+——
+
+
+
+
+
