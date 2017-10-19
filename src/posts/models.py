@@ -45,7 +45,7 @@ class Post(models.Model):
     objects = PostManager()
 
     def __str__(self):
-        return self.user.username
+        return str(self.user.username)
 
     def get_absolute_url(self):
         if self.slug:
