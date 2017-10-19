@@ -1,0 +1,6 @@
+{% for post in post_list %}
+
+  <h3>{{ post.user.username }} | {{ post.title }}</h3>
+  <h5>{{ post.created|timesince }}</h5>
+  {{ post.content }}<hr>
+{% endfor %}

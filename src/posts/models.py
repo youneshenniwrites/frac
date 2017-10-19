@@ -10,7 +10,7 @@ class Post(models.Model):
     '''
     Users can post text and images to the news feed
     '''
-    
+
     # each post has a unique user (creator)
     user = models.ForeignKey(User)
     # this field is not required
@@ -22,3 +22,6 @@ class Post(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    def get_absolute_url(self):
+        return reverse('posts:detail', kwargs={'pk': self.pk})
