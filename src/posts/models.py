@@ -1,6 +1,9 @@
 from django.conf import settings
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.db.models.signals import pre_save
+
+from .utils import unique_slug_generator
 
 
 User = settings.AUTH_USER_MODEL
@@ -16,7 +19,7 @@ class Post(models.Model):
     # this field is not required
     title = models.CharField(max_length=120, blank=True)
     content = models.TextField()
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -24,4 +27,17 @@ class Post(models.Model):
         return self.user.username
 
     def get_absolute_url(self):
-        return reverse('posts:detail', kwargs={'pk': self.pk})
+        return reverse('posts:detail', kwargs={'slug': self.slug})
+
+
+def new_post_unique_slug_signal(sender, instance, *args, **kwargs):
+    '''
+    Django pre-save signal to set the unique slug
+    for the post instance
+    prior to saving it to the database
+    '''
+
+    if not instance.slug:
+        instance.slug = unique_slug_generator(instance)
+
+pre_save.connect(new_post_unique_slug_signal, sender=Post)
