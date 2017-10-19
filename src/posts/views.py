@@ -8,6 +8,7 @@ DetailView:
 user can comment on a single post.
 '''
 
+from django.urls import reverse_lazy
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
@@ -37,11 +38,15 @@ class PostDetailView(LoginRequiredMixin, DetailView):
 
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
-    pass
+    queryset = Post.objects.all()
+    template_name = 'posts/post_edit.html'
+    form_class = PostModelForm
 
 
 class PostDeleteView(LoginRequiredMixin, DeleteView):
-    pass
+    model = Post
+    template_name = 'posts/post_delete.html'
+    success_url = reverse_lazy('posts:list')
 
 
 class PostListView(LoginRequiredMixin, ListView):

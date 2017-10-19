@@ -1,9 +1,14 @@
 {% for post in post_list %}
 
-  <h4>{{ post.user.username }} |
+  <h4>{{ post.user.username }}
+    {% if post.title %}
+    |
     <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+    {% endif %}
+
   </h4>
 
   <h5>{{ post.created|timesince }}</h5>
-  {{ post.content }}<hr>
+  {{ post.content|truncatewords_html:8 }}<a href="{{ post.get_absolute_url }}">...</a>
+  <hr>
 {% endfor %}

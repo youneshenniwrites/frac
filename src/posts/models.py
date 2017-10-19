@@ -9,6 +9,24 @@ from .utils import unique_slug_generator
 User = settings.AUTH_USER_MODEL
 
 
+class PostManager(models.Manager):
+    '''
+    Custom Manager Functionalities
+    '''
+
+    def toggle_like(self, user, post_obj):
+        '''
+        User can like or dislike a post
+        '''
+
+        if user in post_obj.likes.all():
+            post_liked = False
+            post_obj.likes.remove(user)
+        else:
+            post_liked = True
+            post_obj.likes.add(user)
+
+
 class Post(models.Model):
     '''
     Users can post text and images to the news feed
@@ -22,13 +40,18 @@ class Post(models.Model):
     slug = models.SlugField(unique=True, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    likes = models.ManyToManyField(User, related_name='liked')
+
+    objects = PostManager()
 
     def __str__(self):
         return self.user.username
 
     def get_absolute_url(self):
-        return reverse('posts:detail', kwargs={'slug': self.slug})
-
+        if self.slug:
+            return reverse('posts:detail', kwargs={'slug': self.slug})
+        else:
+            return reverse('posts:detail', kwargs={'pk': self.pk})
 
 def new_post_unique_slug_signal(sender, instance, *args, **kwargs):
     '''

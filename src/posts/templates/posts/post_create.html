@@ -1,5 +1,3 @@
-<form class="form" action="" method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="Post">
-</form>
+<div>
+  {% include "posts/generic_form.html" with form=form button_title='Post' %}
+</div>

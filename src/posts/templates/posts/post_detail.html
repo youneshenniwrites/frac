@@ -1,2 +1,4 @@
-<h4>{{post.user.username}} | {{ post.title }}</h4>
+<h4>{{post.user.username}}
+  {% if post.title %} | {{ post.title }} {% endif %}
+</h4>
 {{ post.content }}<hr>
