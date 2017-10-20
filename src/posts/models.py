@@ -40,7 +40,7 @@ class Post(models.Model):
     slug = models.SlugField(unique=True, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    likes = models.ManyToManyField(User, related_name='liked')
+    likes = models.ManyToManyField(User, blank=True, related_name='liked')
 
     objects = PostManager()
 

@@ -11,6 +11,7 @@ class PostModelAdmin(admin.ModelAdmin):
     '''
 
     list_display = (
+                    'id',
                     'user',
                     'title',
                     'slug',

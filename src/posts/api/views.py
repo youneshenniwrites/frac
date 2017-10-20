@@ -7,7 +7,7 @@ from . import serializers
 
 
 class PostCreateAPIView(generics.CreateAPIView):
-    model = Post
+    queryset = Post.objects.all()
     serializer_class = serializers.PostCreateSerializer
 
     def perform_create(self, serializer):
@@ -18,22 +18,30 @@ class PostCreateAPIView(generics.CreateAPIView):
 
 
 class PostDetailAPIView(generics.RetrieveAPIView):
-    model = Post
+    queryset = Post.objects.all()
     serializer_class = serializers.PostDetailSerializer
-    try:
-        lookup_field = 'slug'
-    except:
-        pass
+    lookup_field = 'slug'
+
+
+class PostUpdateAPIView(generics.RetrieveUpdateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = serializers.PostCreateSerializer
+    lookup_field = 'slug'
+
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+class PostDeleteAPIView(generics.DestroyAPIView):
+    serializer_class = serializers.PostDetailSerializer
+    lookup_field = 'slug'
+
+    def get(self, request, slug, format=None):
+        context = {'message':
+                        'Proceed with the Deletion by clicking the Delete button.'}
+        return Response(context)
 
 
 class PostListAPIView(generics.ListAPIView):
     queryset = Post.objects.all()
     serializer_class = serializers.PostListSerializer
-
-
-class PostUpdateAPIView(generics.UpdateAPIView):
-    serializer_class = serializers.PostCreateSerializer
-
-
-class PostDeleteAPIView(generics.DestroyAPIView):
-    serializer_class = serializers.PostCreateSerializer

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, HyperlinkedIdentityField
 
 from posts.models import Post
 
@@ -13,17 +13,14 @@ class PostCreateSerializer(ModelSerializer):
         ]
 
 
+post_detail_url = HyperlinkedIdentityField(
+        view_name='posts-api:detail-api',
+        lookup_field='slug'
+        )
+
+
 class PostDetailSerializer(ModelSerializer):
-    class Meta:
-        model = Post
-        fields = [
-            'user',
-            'title',
-            'content',
-        ]
-
-
-class PostListSerializer(ModelSerializer):
+    url = post_detail_url
     username = serializers.SerializerMethodField()
 
     def get_username(self, obj):
@@ -37,8 +34,24 @@ class PostListSerializer(ModelSerializer):
             'title',
             'slug',
             'content',
+            'url',
         ]
 
 
-class PostDeleteSerializer(ModelSerializer):
-    pass
+class PostListSerializer(ModelSerializer):
+    url = post_detail_url
+    username = serializers.SerializerMethodField()
+
+    def get_username(self, obj):
+        return obj.user.username
+
+    class Meta:
+        model = Post
+        fields = [
+            'id',
+            'username',
+            'title',
+            'slug',
+            'content',
+            'url',
+        ]

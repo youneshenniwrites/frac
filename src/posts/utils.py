@@ -29,8 +29,14 @@ def unique_slug_generator(instance, new_slug=None):
 
     if new_slug is not None:
         slug = new_slug
-    else:
+    elif instance.title is not None:
+        # build a title slug
         slug = slugify(instance.title)
+
+    if not instance.title:
+        # build a random slug
+        titless_slug = random_string_generator(size=8)
+        slug = slugify(titless_slug)
 
     if slug in DO_NOT_USE:
         new_slug = '{slug}-{randstr}'.format(

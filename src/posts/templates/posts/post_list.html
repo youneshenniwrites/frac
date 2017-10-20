@@ -9,6 +9,7 @@
   </h4>
 
   <h5>{{ post.created|timesince }}</h5>
+  {{ post.truncated }}
   {{ post.content|truncatewords_html:8 }}<a href="{{ post.get_absolute_url }}">...</a>
   <hr>
 {% endfor %}
