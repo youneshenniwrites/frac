@@ -1,4 +1,5 @@
 from rest_framework import generics
+from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from posts.models import Post
@@ -45,3 +46,13 @@ class PostDeleteAPIView(generics.DestroyAPIView):
 class PostListAPIView(generics.ListAPIView):
     queryset = Post.objects.all()
     serializer_class = serializers.PostListSerializer
+
+
+class LikeToggleAPIView(APIView):
+    def get(self, request, slug, format=None):
+        post_qs = Post.objects.filter(slug=slug)
+        message = 'Not allowed'
+        if request.user.is_authenticated():
+            liked_post = Post.objects.toggle_like(request.user, post_qs.first())
+            return Response({'likes': liked_post})
+        return Response({'message': message}, status=400)

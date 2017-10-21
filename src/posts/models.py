@@ -53,6 +53,11 @@ class Post(models.Model):
         else:
             return reverse('posts:detail', kwargs={'pk': self.pk})
 
+    class Meta:
+        ordering = ('-created',)
+
+
+
 def new_post_unique_slug_signal(sender, instance, *args, **kwargs):
     '''
     Django pre-save signal to set the unique slug

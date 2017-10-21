@@ -41,9 +41,13 @@ class PostDetailSerializer(ModelSerializer):
 class PostListSerializer(ModelSerializer):
     url = post_detail_url
     username = serializers.SerializerMethodField()
+    date_created = serializers.SerializerMethodField()
 
     def get_username(self, obj):
         return obj.user.username
+
+    def get_date_created(self, obj):
+        return obj.created.strftime('%b %d %Y | at %I:%M %p')
 
     class Meta:
         model = Post
@@ -54,4 +58,5 @@ class PostListSerializer(ModelSerializer):
             'slug',
             'content',
             'url',
+            'date_created',
         ]

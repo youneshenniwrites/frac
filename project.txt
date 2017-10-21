@@ -54,6 +54,16 @@ All rights reserved.
 I herby declare that this is an enclosed document and that I have a copy of it elsewhere.
 ——
 
+Technical:
+——————————
+Ajax infinite scrolling
+Like button toggle
+Follow/unfollow users
+User recommendation
+Mobile front end with React Native (JSX)
+Like button changes colour
+Awarding trophees to winners
+
 
 
 

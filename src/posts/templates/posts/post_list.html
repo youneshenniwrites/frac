@@ -1,15 +1,45 @@
-{% for post in post_list %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-  <h4>{{ post.user.username }}
-    {% if post.title %}
-    |
-    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-    {% endif %}
+<script type="text/javascript">
+  $(document).ready(function(){
+    $.ajax({
+      url: '/api/posts/',
+      method: 'GET',
+      success: function(data){
+        // iterate through the array of objects
+        $.each(data, function(key, value){
+          var postUser= value.username;
+          var postTitle = value.title;
+          var postSlug = value.slug;
+          var postCreated = value.date_created;
+          var postContent = value.content;
+          var postShort;
+          if (postContent.length >= 50){
+            console.log('yes');
+            postShort = jQuery.trim(postContent).substring(0, 50).split(" ").slice(0, -1).join(" ")
+            + "<a href='/posts/" + postSlug + "'>" + "..." + "</a>";
+          } else {
+            console.log('no');
+            postShort = postContent;
+          }
+          console.log(postContent.length);
 
-  </h4>
 
-  <h5>{{ post.created|timesince }}</h5>
-  {{ post.truncated }}
-  {{ post.content|truncatewords_html:8 }}<a href="{{ post.get_absolute_url }}">...</a>
-  <hr>
-{% endfor %}
+          $('#posts-container').append(
+            "<div>" + "<h4>" + postUser + ": " + "<a href='/posts/"
+            + postSlug + "'>" + postTitle + "</a>" + "<h5>"
+            + postCreated + "</h5>" + postShort + "</div>" + "<hr>"
+          );
+        });
+      },
+      error: function(data){
+        console.log('error');
+        console.log(data);
+      }
+    });
+  });
+</script>
+
+<div id="posts-container">
+
+</div>
