@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^(?P<slug>[\w-]+)/$', PostDetailAPIView.as_view(), name='detail-api'),
     url(r'^(?P<slug>[\w-]+)/edit/$', PostUpdateAPIView.as_view(), name='update-api'),
     url(r'^(?P<slug>[\w-]+)/delete/$', PostDeleteAPIView.as_view(), name='delete-api'),
+    url(r'^(?P<slug>[\w-]+)/like/$', LikeToggleAPIView.as_view(), name='like-api'),
 ]
