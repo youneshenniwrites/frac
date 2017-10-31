@@ -1,5 +1,31 @@
 $(document).ready(function(){
 
+  // Like button
+  $(document.body).on('click', '.post-like', function(e){
+      e.preventDefault();
+      var this_ = $(this);
+      var postId = this_.attr('post-id');
+      var likeUrl = '/api/posts/' + postId + '/like/';
+
+      $.ajax({
+        method: 'GET',
+        url: likeUrl,
+        success: function(data){
+          if (data.liked){
+            console.log('yes');
+            this_.text('Liked');
+          } else {
+            console.log('no');
+            this_.text('Unliked');
+          };
+        },
+        error: function(data){
+          console.log('error');
+          console.log(data);
+        }
+      })
+    });
+
   // List of posts api data
   $.ajax({
     url: '/api/posts/',
@@ -15,6 +41,7 @@ $(document).ready(function(){
         var postShort;
         var likeToggle = value.likeToggle;
         var numLikes = value.likes;
+        var displayLikes;
         if (numLikes > 0) {
           displayLikes = '(' + numLikes + ')';
         } else {
@@ -43,30 +70,5 @@ $(document).ready(function(){
       console.log(data);
     }
   });
-
-  // Like button
-  $(document.body).on('click', '.post-like', function(e){
-      e.preventDefault();
-      var this_ = $(this);
-      var postId = this_.attr('post-id');
-      var likeUrl = '/api/posts/' + postId + '/like/';
-
-      $.ajax({
-        method: 'GET',
-        url: likeUrl,
-        success: function(data){
-          // need to work the logic in here
-          if (data.liked){
-            this_.text('Liked');
-          } else {
-            this_.text('Unliked');
-          };
-        },
-        error: function(data){
-          console.log('error');
-          console.log(data);
-        }
-      })
-    });
 
 }); // end of document ready

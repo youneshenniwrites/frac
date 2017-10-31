@@ -25,6 +25,7 @@ class PostManager(models.Manager):
         else:
             post_liked = True
             post_obj.likes.add(user)
+        return post_liked
 
 
 class Post(models.Model):
