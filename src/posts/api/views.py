@@ -44,8 +44,17 @@ class PostDeleteAPIView(generics.DestroyAPIView):
 
 
 class PostListAPIView(generics.ListAPIView):
-    queryset = Post.objects.all()
     serializer_class = serializers.PostListSerializer
+
+    def get_queryset(self, *args, **kwargs):
+        '''
+        Only diplsay my posts and the users I follow
+        '''
+        im_following = self.request.user.profile.get_following()
+        qs_others = Post.objects.filter(user__in=im_following)
+        qs_me = Post.objects.filter(user=self.request.user)
+        qs_total = (qs_others | qs_me).distinct()
+        return qs_total
 
 
 class LikeToggleAPIView(APIView):
