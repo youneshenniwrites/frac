@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer, HyperlinkedIdentityField
 
 from posts.models import Post
+from accounts.api.serializers import UserProfileSerializer
 
 
 class PostCreateSerializer(ModelSerializer):
@@ -20,17 +21,14 @@ post_detail_url = HyperlinkedIdentityField(
 
 
 class PostDetailSerializer(ModelSerializer):
+    user = UserProfileSerializer(read_only=True)
     url = post_detail_url
-    username = serializers.SerializerMethodField()
-
-    def get_username(self, obj):
-        return obj.user.username
 
     class Meta:
         model = Post
         fields = [
             'id',
-            'username',
+            'user',
             'title',
             'slug',
             'content',
@@ -39,13 +37,10 @@ class PostDetailSerializer(ModelSerializer):
 
 
 class PostListSerializer(ModelSerializer):
+    user = UserProfileSerializer(read_only=True)
     url = post_detail_url
-    username = serializers.SerializerMethodField()
     date_created = serializers.SerializerMethodField()
     likes = serializers.SerializerMethodField()
-
-    def get_username(self, obj):
-        return obj.user.username
 
     def get_date_created(self, obj):
         return obj.created.strftime('%b %d %Y | at %I:%M %p')
@@ -58,7 +53,7 @@ class PostListSerializer(ModelSerializer):
         model = Post
         fields = [
             'id',
-            'username',
+            'user',
             'title',
             'slug',
             'content',

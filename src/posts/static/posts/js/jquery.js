@@ -33,7 +33,7 @@ $(document).ready(function(){
     success: function(data){
       // iterate through the array of objects
       $.each(data, function(key, value){
-        var postUser= value.username;
+        var postUser= value.user;
         var postTitle = value.title;
         var postSlug = value.slug;
         var postCreated = value.date_created;
@@ -57,7 +57,7 @@ $(document).ready(function(){
         }
 
         $('#posts-container').append(
-          "<div>" + "<h4>" + postUser + ": " + "<a href='/posts/"
+          "<div>" + "<h4><a href='" + postUser.url + "'>" + postUser.username + "</a>: " + "<a href='/posts/"
           + postSlug + "'>" + postTitle + "</a>" + "<h5>"
           + postCreated + "</h5>" + postShort +
           "<div><a href='#' class='post-like' post-id=" + postSlug + ">Like " + displayLikes + " </a></div>"
