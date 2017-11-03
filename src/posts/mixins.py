@@ -7,7 +7,7 @@ class OwnerPostMixin(object):
     def form_valid(self, form):
         '''only the posts owner can edit them, not even the admin'''
         if form.instance.user == self.request.user:
-            return super(UserOwnerMixin, self).form_valid(form)
+            return super(OwnerPostMixin, self).form_valid(form)
         else:
             form._errors[forms.forms.NON_FIELD_ERRORS] = ErrorList(
             ["This user is not allowed to change this data."]
@@ -21,7 +21,7 @@ class OwnerOrAdminMixin(object):
     either by the post owner or an admin
     '''
     def get_object(self, queryset=None):
-        obj = super(OwnerDeleteMixin, self).get_object()
+        obj = super(OwnerOrAdminMixin, self).get_object()
         if self.request.user.is_staff or self.request.user.is_superuser:
             return obj
 
