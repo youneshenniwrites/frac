@@ -12,10 +12,10 @@ $(document).ready(function(){
         url: likeUrl,
         success: function(data){
           if (data.liked){
-            console.log('yes');
+            //console.log('yes');
             this_.text('Liked');
           } else {
-            console.log('no');
+            //console.log('no');
             this_.text('Unliked');
           };
         },
@@ -42,8 +42,14 @@ $(document).ready(function(){
         var likeToggle = value.likeToggle;
         var numLikes = value.likes;
         var displayLikes;
+        var trophee;
         if (numLikes > 0) {
+          console.log(numLikes);
           displayLikes = '(' + numLikes + ')';
+          if (numLikes === 3) {
+            trophee = 'You won a new badge!';
+            displayLikes += trophee;
+          }
         } else {
           displayLikes = ' ';
         }
@@ -57,7 +63,7 @@ $(document).ready(function(){
         }
 
         $('#posts-container').append(
-          "<div>" + "<h4><a href='" + postUser.url + "'>" + postUser.username + "</a>: " + "<a href='/posts/"
+          "<div>" + "<h4><a cla='user-profile' href='" + postUser.url + "'>" + postUser.username + "</a>: " + "<a href='/posts/"
           + postSlug + "'>" + postTitle + "</a>" + "<h5>"
           + postCreated + "</h5>" + postShort +
           "<div><a href='#' class='post-like' post-id=" + postSlug + ">Like " + displayLikes + " </a></div>"

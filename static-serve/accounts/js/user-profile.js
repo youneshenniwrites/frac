@@ -1,34 +1,8 @@
 $(document).ready(function(){
 
-  // Like button
-  $(document.body).on('click', '.post-like', function(e){
-      e.preventDefault();
-      var this_ = $(this);
-      var postId = this_.attr('post-id');
-      var likeUrl = '/api/posts/' + postId + '/like/';
-
-      $.ajax({
-        method: 'GET',
-        url: likeUrl,
-        success: function(data){
-          if (data.liked){
-            //console.log('yes');
-            this_.text('Liked');
-          } else {
-            //console.log('no');
-            this_.text('Unliked');
-          };
-        },
-        error: function(data){
-          console.log('error');
-          console.log(data);
-        }
-      })
-    });
-
   // List of posts api data
   $.ajax({
-    url: '/api/posts/',
+    url: '/profiles/Batman7/',
     method: 'GET',
     success: function(data){
       // iterate through the array of objects
@@ -62,7 +36,7 @@ $(document).ready(function(){
           postShort = postContent;
         }
 
-        $('#posts-container').append(
+        $('#posts-user').append(
           "<div>" + "<h4><a href='" + postUser.url + "'>" + postUser.username + "</a>: " + "<a href='/posts/"
           + postSlug + "'>" + postTitle + "</a>" + "<h5>"
           + postCreated + "</h5>" + postShort +

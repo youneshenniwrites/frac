@@ -8,6 +8,7 @@ from accounts.views import UserRegisterView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^api/profiles/', include('accounts.api.urls', namespace='profiles-api')),
     url(r'^api/posts/', include('posts.api.urls', namespace='posts-api')),
     url(r'^profiles/', include('accounts.urls', namespace='profiles')),
     url(r'^posts/', include('posts.urls', namespace='posts')),

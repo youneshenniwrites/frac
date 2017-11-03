@@ -1,5 +1,24 @@
+{% load static %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="{% static "/accounts/js/user-profile.js" %}"></script>
+
+<!--Ajax calls -->
+<div id="posts-user">
+  <h1 id='user-id'>{{ object.username }}</h1>
+</div>
+
+<!--Django templates-->
 <h1>{{ object.username }}</h1>
-<p>Followers: {{ object.followed_by.count }}</p>
+
+<p>
+  <a href="{{ object.profile.get_follow_url }}">
+    <!-- make it disappear for user iwn profile -->
+    <b>{% if following %}Unfollow{% else %}Follow{% endif %}</b>
+  </a>
+</p>
+<b>Followers: {{ object.followed_by.all.count }}</b>
+
 
 <h2>Posts</h2>
 {% for post in object.post_set.all %}
@@ -7,11 +26,7 @@
 {% endfor %}
 
 <h2>Following ({{ object.profile.get_following.count }}) </h2>
-<p>
-  <a href="{{ object.profile.get_follow_url }}">
-    <b>{% if following %}Unfollow{% else %}Follow{% endif %}</b>
-  </a>
-</p>
+
 {% for user in object.profile.get_following %}
   <a href="/profiles/{{ user.username }}">{{ user.username }}</a><br><hr>
 {% empty %}

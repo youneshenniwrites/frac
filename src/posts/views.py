@@ -10,7 +10,8 @@ user can comment on a single post.
 
 from django.urls import reverse_lazy
 from django.shortcuts import render
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import (LoginRequiredMixin,
+                                        PermissionRequiredMixin)
 from django.views.generic import (
                                     DetailView,
                                     CreateView,
@@ -21,6 +22,7 @@ from django.views.generic import (
 
 from .models import Post
 from .forms import PostModelForm
+from .mixins import OwnerPostMixin, OwnerOrAdminMixin
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
@@ -37,14 +39,14 @@ class PostDetailView(LoginRequiredMixin, DetailView):
     template_name = 'posts/post_detail.html'
 
 
-class PostUpdateView(LoginRequiredMixin, UpdateView):
+class PostUpdateView(LoginRequiredMixin, OwnerPostMixin, UpdateView):
     queryset = Post.objects.all()
-    template_name = 'posts/post_edit.html'
     form_class = PostModelForm
+    template_name = 'posts/post_edit.html'
 
 
-class PostDeleteView(LoginRequiredMixin, DeleteView):
-    model = Post
+class PostDeleteView(LoginRequiredMixin, OwnerOrAdminMixin, DeleteView):
+    queryset = Post.objects.all()
     template_name = 'posts/post_delete.html'
     success_url = reverse_lazy('posts:list')
 

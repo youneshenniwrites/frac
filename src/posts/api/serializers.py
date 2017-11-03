@@ -41,6 +41,7 @@ class PostListSerializer(ModelSerializer):
     url = post_detail_url
     date_created = serializers.SerializerMethodField()
     likes = serializers.SerializerMethodField()
+    badges = serializers.SerializerMethodField()
 
     def get_date_created(self, obj):
         return obj.created.strftime('%b %d %Y | at %I:%M %p')
@@ -48,6 +49,11 @@ class PostListSerializer(ModelSerializer):
     def get_likes(self, obj):
         # total number of likes
         return obj.likes.all().count()
+
+    def get_badges(self, obj):
+        numLikes = obj.likes.all().count()
+        if numLikes == 3:
+            return str(numLikes) + 'Pawn'
 
     class Meta:
         model = Post
@@ -60,4 +66,5 @@ class PostListSerializer(ModelSerializer):
             'url',
             'date_created',
             'likes',
+            'badges',
         ]

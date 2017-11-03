@@ -19,7 +19,6 @@ class UserRegisterView(FormView):
         check for valid fields and hashing the password
         before saving the new user to the database.
         '''
-
         username = form.cleaned_data.get('username')
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password')

@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from posts.models import Post
+from .permissions import IsOwnerOrReadOnly, IsOwnerOrAdmin
 
 from . import serializers
 
@@ -27,6 +28,7 @@ class PostDetailAPIView(generics.RetrieveAPIView):
 class PostUpdateAPIView(generics.RetrieveUpdateAPIView):
     queryset = Post.objects.all()
     serializer_class = serializers.PostCreateSerializer
+    permission_classes = (IsOwnerOrReadOnly,)
     lookup_field = 'slug'
 
     def perform_update(self, serializer):
@@ -34,7 +36,9 @@ class PostUpdateAPIView(generics.RetrieveUpdateAPIView):
 
 
 class PostDeleteAPIView(generics.DestroyAPIView):
+    queryset = Post.objects.all()
     serializer_class = serializers.PostDetailSerializer
+    permission_classes = (IsOwnerOrAdmin,)
     lookup_field = 'slug'
 
     def get(self, request, slug, format=None):
@@ -61,7 +65,6 @@ class LikeToggleAPIView(APIView):
     '''
     Uses the custom model manager for Like toggle button
     '''
-
     def get(self, request, slug, format=None):
         post_qs = Post.objects.filter(slug=slug)
         message = 'Not allowed'

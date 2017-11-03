@@ -33,6 +33,7 @@ class Post(models.Model):
     Users can post text and images to the news feed
     '''
 
+    
     # each post has a unique user (creator)
     user = models.ForeignKey(User)
     # this field is not required

@@ -49,6 +49,12 @@ class UserProfile(models.Model):
 
     objects = UserProfileManager()
 
+    def get_posts(self):
+        '''
+        all posts for a single user
+        '''
+        return self.user.post_set.all()
+
     def get_following(self):
         '''
         Users won't be following themselves
