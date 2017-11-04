@@ -112,3 +112,4 @@ project.txt
 lib/
 include/
 bin/
+static-serve/
