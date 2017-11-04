@@ -2,16 +2,7 @@ from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer, HyperlinkedIdentityField
 
 from posts.models import Post
-from accounts.api.serializers import UserProfileSerializer
-
-
-class PostCreateSerializer(ModelSerializer):
-    class Meta:
-        model = Post
-        fields = [
-            'title',
-            'content',
-        ]
+from accounts.api.serializers import UsersListProfileSerializer
 
 
 post_detail_url = HyperlinkedIdentityField(
@@ -20,37 +11,23 @@ post_detail_url = HyperlinkedIdentityField(
         )
 
 
-class PostDetailSerializer(ModelSerializer):
-    user = UserProfileSerializer(read_only=True)
-    url = post_detail_url
-
-    class Meta:
-        model = Post
-        fields = [
-            'id',
-            'user',
-            'title',
-            'slug',
-            'content',
-            'url',
-        ]
-
-
 class PostListSerializer(ModelSerializer):
-    user = UserProfileSerializer(read_only=True)
-    url = post_detail_url
+    user = UsersListProfileSerializer(read_only=True)
+    postApiURL= post_detail_url
     date_created = serializers.SerializerMethodField()
-    likes = serializers.SerializerMethodField()
+    all_likes_post = serializers.SerializerMethodField()
     badges = serializers.SerializerMethodField()
 
     def get_date_created(self, obj):
         return obj.created.strftime('%b %d %Y | at %I:%M %p')
 
-    def get_likes(self, obj):
-        # total number of likes
+    def get_all_likes_post(self, obj):
+        '''
+        counts the total number of likes per post
+        '''
         return obj.likes.all().count()
 
-    def get_badges(self, obj):
+    def get_badges(self, obj): # to be worked
         numLikes = obj.likes.all().count()
         if numLikes == 3:
             return str(numLikes) + 'Pawn'
@@ -63,8 +40,31 @@ class PostListSerializer(ModelSerializer):
             'title',
             'slug',
             'content',
-            'url',
+            'postApiURL',
+            'all_likes_post',
             'date_created',
-            'likes',
             'badges',
+        ]
+
+
+class PostCreateSerializer(ModelSerializer):
+    class Meta:
+        model = Post
+        fields = [
+            'title',
+            'content',
+        ]
+
+class PostDetailSerializer(PostListSerializer):
+
+    class Meta:
+        model = Post
+        fields = [
+            'id',
+            'user',
+            'title',
+            'slug',
+            'content',
+            'all_likes_post',
+            'date_created',
         ]

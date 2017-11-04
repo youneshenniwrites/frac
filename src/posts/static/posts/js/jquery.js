@@ -46,7 +46,7 @@ $(document).ready(function(){
         if (numLikes > 0) {
           console.log(numLikes);
           displayLikes = '(' + numLikes + ')';
-          if (numLikes === 3) {
+          if (numLikes === 2) {
             trophee = 'You won a new badge!';
             displayLikes += trophee;
           }

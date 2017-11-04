@@ -55,6 +55,12 @@ class UserProfile(models.Model):
         '''
         return self.user.post_set.all()
 
+    def get_likes(self):
+        '''
+        all likes for a single user
+        '''
+        pass
+
     def get_following(self):
         '''
         Users won't be following themselves
@@ -78,7 +84,7 @@ class UserProfile(models.Model):
 def post_save_user_receiver(sender, instance, created, *args, **kwargs):
     '''
     Django signal to automatically create
-    a user profiles when a user object is created
+    a user profile when a user object is created
     '''
     if created:
         new_profile = UserProfile.objects.get_or_create(user=instance)
