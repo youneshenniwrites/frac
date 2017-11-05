@@ -63,10 +63,13 @@ $(document).ready(function(){
         }
 
         $('#posts-container').append(
-          "<div>" + "<h4><a cla='user-profile' href='/profiles/" + postUser.username + "'>" + postUser.username + "</a>: " + "<a href='/posts/"
+          "<div>" + "<h4><a class='user-profile' href='/profiles/"
+          + postUser.username + "'>" + postUser.username
+          + "</a>: " + "<a href='/posts/"
           + postSlug + "'>" + postTitle + "</a>" + "<h5>"
           + postCreated + "</h5>" + postShort +
-          "<div><a href='#' class='post-like' post-id=" + postSlug + ">Like " + displayLikes + " </a></div>"
+          "<div><a href='#' class='post-like' post-id=" + postSlug
+          + ">Like " + displayLikes + " </a></div>"
           + "</div>" + "<hr>"
         );
       });

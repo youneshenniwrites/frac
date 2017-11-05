@@ -15,23 +15,3 @@
   </p>
 
 </div>
-
-<!--Django templates for following users; turn it into ajax-->
-
-<h2>List of Followers ({{ object.followed_by.all.count }})</h2>
-{% for profile in object.followed_by.all %}
-  <a href="/profiles/{{ profile.user.username }}">
-    {{ profile.user.username }}
-  </a>
-  <br><hr>
-{% empty %}
-<h4>Not followed by any users</h4>
-{% endfor %}
-
-<h2>List of Following ({{ object.profile.get_following.count }}) </h2>
-
-{% for user in object.profile.get_following %}
-  <a href="/profiles/{{ user.username }}">{{ user.username }}</a><br><hr>
-{% empty %}
-<h4>Not following any users</h4>
-{% endfor %}

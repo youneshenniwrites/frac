@@ -41,10 +41,7 @@ class UsersListProfileSerializer(serializers.ModelSerializer):
         '''
         counts all likes for a user
         '''
-        list_all_likes = []
-        for post in obj.post_set.all():
-            list_all_likes.append(post.likes.count())
-        return sum(list_all_likes)
+        return sum([post.likes.count() for post in obj.post_set.all()])
 
     class Meta:
         model = User
@@ -62,12 +59,23 @@ class UsersListProfileSerializer(serializers.ModelSerializer):
 
 class UserSingleProfileSerializer(UsersListProfileSerializer):
     all_myPosts_content = serializers.SerializerMethodField()
+    all_myFollowers_list = serializers.SerializerMethodField()
+    iFollow_list = serializers.SerializerMethodField()
 
     def get_all_myPosts_content(self, obj):
         '''
-        displays all posts for a user
+        displays a list of all my posts
         '''
         return [post.content for post in obj.profile.get_posts()]
+
+    def get_all_myFollowers_list(self, obj):
+        '''
+        displays a list of all my followers
+        '''
+        return [follower.user.username for follower in obj.followed_by.all()]
+
+    def get_iFollow_list(self, obj):
+        return [ifollow.username for ifollow in obj.profile.get_following().all()] 
 
     class Meta:
         model = User
@@ -80,4 +88,6 @@ class UserSingleProfileSerializer(UsersListProfileSerializer):
             'all_myFollowers',
             'iFollow',
             'all_myPosts_content',
+            'all_myFollowers_list',
+            'iFollow_list',
         ]
