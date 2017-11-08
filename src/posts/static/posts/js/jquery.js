@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-  // Like button
+  // Ajax Like button
   $(document.body).on('click', '.post-like', function(e){
       e.preventDefault();
       var this_ = $(this);
@@ -67,8 +67,8 @@ $(document).ready(function(){
           + postUser.username + "'>" + postUser.username
           + "</a>: " + "<a href='/posts/"
           + postSlug + "'>" + postTitle + "</a>" + "<h5>"
-          + postCreated + "</h5>" + postShort +
-          "<div><a href='#' class='post-like' post-id=" + postSlug
+          + postCreated + "</h5>" + postShort
+          + "<div><a href='#' class='post-like' post-id=" + postSlug
           + ">Like " + displayLikes + " </a></div>"
           + "</div>" + "<hr>"
         );

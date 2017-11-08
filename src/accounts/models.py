@@ -41,11 +41,17 @@ class UserProfileManager(models.Manager):
 
 
 class UserProfile(models.Model):
+    '''
+    Extends the Django User model
+    '''
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                 related_name='profile')
     following = models.ManyToManyField(settings.AUTH_USER_MODEL,
                                         blank=True,
                                         related_name='followed_by')
+
+    # follow antonio mele social network
+    # must add a date of birth field and an optional image profile field.
 
     objects = UserProfileManager()
 
@@ -72,13 +78,17 @@ class UserProfile(models.Model):
         '''
         Redirect to after toggle follow
         '''
-        return reverse_lazy('profiles:follow', kwargs={'username':self.user.username})
+        return reverse_lazy('profiles:follow',
+                            kwargs={'username':self.user.username})
 
     def get_absolute_url(self):
-        return reverse_lazy('profiles:detail', kwargs={'username':self.user.username})
+        return reverse_lazy('profiles:detail',
+                            kwargs={'username':self.user.username})
 
     def __str__(self):
-        return str(self.following.all().count())
+        return 'Username: {} [ Followers ({}); Following ({}) ]'.format(self.user.username,
+                                          self.user.followed_by.all().count(),
+                                          self.following.all().count())
 
 
 def post_save_user_receiver(sender, instance, created, *args, **kwargs):
@@ -87,6 +97,7 @@ def post_save_user_receiver(sender, instance, created, *args, **kwargs):
     a user profile when a user object is created
     '''
     if created:
-        new_profile = UserProfile.objects.get_or_create(user=instance)
+        new_profile, is_created = UserProfile.objects.get_or_create(user=instance)
+        # make a default follower for the new user (trydjango 6:51:58)
 
 post_save.connect(post_save_user_receiver, sender=settings.AUTH_USER_MODEL)

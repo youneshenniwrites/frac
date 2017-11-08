@@ -43,6 +43,7 @@ class UsersListProfileSerializer(serializers.ModelSerializer):
         '''
         return sum([post.likes.count() for post in obj.post_set.all()])
 
+
     class Meta:
         model = User
         fields = [
@@ -61,6 +62,7 @@ class UserSingleProfileSerializer(UsersListProfileSerializer):
     all_myPosts_content = serializers.SerializerMethodField()
     all_myFollowers_list = serializers.SerializerMethodField()
     iFollow_list = serializers.SerializerMethodField()
+    followed_boolean = serializers.SerializerMethodField()
 
     def get_all_myPosts_content(self, obj):
         '''
@@ -75,7 +77,13 @@ class UserSingleProfileSerializer(UsersListProfileSerializer):
         return [follower.user.username for follower in obj.followed_by.all()]
 
     def get_iFollow_list(self, obj):
-        return [ifollow.username for ifollow in obj.profile.get_following().all()] 
+        return [ifollow.username for ifollow in obj.profile.get_following().all()]
+
+    def get_followed_boolean(self, obj):
+        if "followed" in self.context:
+            return self.context["followed"]
+        return 'error'
+
 
     class Meta:
         model = User
@@ -90,4 +98,5 @@ class UserSingleProfileSerializer(UsersListProfileSerializer):
             'all_myPosts_content',
             'all_myFollowers_list',
             'iFollow_list',
+            'followed_boolean',
         ]

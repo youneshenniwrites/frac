@@ -6,12 +6,6 @@
 <!--Ajax calls -->
 <div id="posts-user">
 
-  <h1 id='user-id'>{{ object.username }}</h1>
-  <p>
-    <a href="{{ object.profile.get_follow_url }}">
-      <!-- make it disappear for user iwn profile -->
-      <b>{% if following %}Unfollow{% else %}Follow{% endif %}</b>
-    </a>
-  </p>
+  <h1 id='username-id'>{{ object.username }}</h1>
 
 </div>

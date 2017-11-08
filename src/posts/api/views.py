@@ -32,6 +32,9 @@ class PostUpdateAPIView(generics.RetrieveUpdateAPIView):
     lookup_field = 'slug'
 
     def perform_update(self, serializer):
+        """
+        Sets the user to the logged in user.
+        """
         serializer.save(user=self.request.user)
 
 
@@ -67,6 +70,7 @@ class LikeToggleAPIView(APIView):
     '''
     def get(self, request, slug, format=None):
         post_qs = Post.objects.filter(slug=slug)
+        #print(post_qs.first())
         message = 'Not allowed'
         if request.user.is_authenticated():
             # arguments as defined in the custom model manager
