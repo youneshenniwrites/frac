@@ -22,7 +22,7 @@ class UserProfileManager(models.Manager):
     def toggle_follow(self, user, to_toggle_user):
         ''' follow unfollow users '''
         user_profile, created = UserProfile.objects.get_or_create(user=user)
-        if to_toggle_user in user_profile.following.all():
+        if user_profile.following.filter(username=to_toggle_user).exists():
             user_profile.following.remove(to_toggle_user)
             added = False
         else:
