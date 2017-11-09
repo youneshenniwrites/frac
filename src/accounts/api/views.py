@@ -39,12 +39,11 @@ class UserDetailAPIVIew(generics.RetrieveAPIView):
 
     def get_serializer_context(self):
         '''
-        passing the extra is_following argument to the UserDetailAPIVIew
+        passing the extra is_followed argument to the UserDetailAPIVIew
         '''
         context = super(UserDetailAPIVIew, self).get_serializer_context()
         is_followed = self.request.user.profile.following.filter(username=self.object).exists()
         context.update({'followed': is_followed})
-        print(is_followed)
         return context
 
 
