@@ -66,14 +66,13 @@ class PostListAPIView(generics.ListAPIView):
 
 class LikeToggleAPIView(APIView):
     '''
-    Uses the custom model manager for Like toggle button
+    Uses the custom model manager for Like toggle button.
+    Users can't like their own posts.
     '''
     def get(self, request, slug, format=None):
         post_qs = Post.objects.filter(slug=slug)
-        #print(post_qs.first())
         message = 'Not allowed'
-        if request.user.is_authenticated():
-            # arguments as defined in the custom model manager
+        if request.user.is_authenticated() and not request.user.id == post_qs.first().user.id:
             liked_post = Post.objects.toggle_like(request.user, post_qs.first())
             return Response({'liked': liked_post})
         return Response({'message': message}, status=400)
