@@ -48,9 +48,11 @@ $(document).ready(function(){
            test = 'Follow';
          }
 
-        // toggle follow this user
-        $('#posts-user').append("<div><a href='#' class='follow-user' user-id="
-        + data.username + ">" + test + "</a></div>");
+         // if not my own profile, then toggle follow this user
+        if (data.loggedIn !== data.username) {
+          $('#posts-user').append("<div class='hideMe'><a href='#' class='follow-user' user-id="
+          + data.username + ">" + test + "</a></div>");
+        };
 
         // Key infos about the user
         $('#posts-user').append("<h1>" + data.username + "</h1>");

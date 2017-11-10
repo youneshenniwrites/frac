@@ -43,8 +43,10 @@ class UserDetailAPIVIew(generics.RetrieveAPIView):
         '''
         context = super(UserDetailAPIVIew, self).get_serializer_context()
         is_followed = self.request.user.profile.following.filter(username=self.object).exists()
-        context.update({'followed': is_followed})
+        loggedIn = self.request.user.username
+        context.update({'followed': is_followed, 'loggedIn': loggedIn})
         return context
+
 
 
 class FollowToggleAPIView(APIView):

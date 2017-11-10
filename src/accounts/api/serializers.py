@@ -63,6 +63,7 @@ class UserSingleProfileSerializer(UsersListProfileSerializer):
     all_myFollowers_list = serializers.SerializerMethodField()
     iFollow_list = serializers.SerializerMethodField()
     followed_boolean = serializers.SerializerMethodField()
+    loggedIn = serializers.SerializerMethodField()
 
     def get_all_myPosts_content(self, obj):
         '''
@@ -84,6 +85,11 @@ class UserSingleProfileSerializer(UsersListProfileSerializer):
             return self.context["followed"]
         return 'error'
 
+    def get_loggedIn(self, obj):
+        if "loggedIn" in self.context:
+            return self.context["loggedIn"]
+        return 'error'
+
 
     class Meta:
         model = User
@@ -99,4 +105,5 @@ class UserSingleProfileSerializer(UsersListProfileSerializer):
             'all_myFollowers_list',
             'iFollow_list',
             'followed_boolean',
+            'loggedIn'
         ]
