@@ -1,3 +1,10 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
 <div>
   {% include "posts/generic_form.html" with form=form button_title='Post' %}
 </div>
+
+{% endblock content %}

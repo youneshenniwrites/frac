@@ -26,7 +26,7 @@ $(document).ready(function(){
       })
     });
 
-  // List of posts api data
+  // Ajax call to list all posts api data
   $.ajax({
     url: '/api/posts/',
     method: 'GET',
@@ -44,10 +44,10 @@ $(document).ready(function(){
         var displayLikes;
         var trophee;
         if (numLikes > 0) {
-          console.log(numLikes);
+          //console.log(numLikes);
           displayLikes = '(' + numLikes + ')';
           if (numLikes === 2) {
-            trophee = 'You won a new badge!';
+            trophee = ' You won a new badge!';
             displayLikes += trophee;
           }
         } else {
@@ -63,14 +63,14 @@ $(document).ready(function(){
         }
 
         $('#posts-container').append(
-          "<div>" + "<h4><a class='user-profile' href='/profiles/"
+          "<div id='single-post'>" + "<h4><a class='user-profile' href='/profiles/"
           + postUser.username + "'>" + postUser.username
           + "</a>: " + "<a href='/posts/"
           + postSlug + "'>" + postTitle + "</a>" + "<h5>"
           + postCreated + "</h5>" + postShort
           + "<div><a href='#' class='post-like' post-id=" + postSlug
           + ">Like " + displayLikes + " </a></div>"
-          + "</div>" + "<hr>"
+          + "</div>"// + "<hr>"
         );
       });
     },
@@ -78,6 +78,6 @@ $(document).ready(function(){
       console.log('error');
       console.log(data);
     }
-  });
+  }); // end of ajax call
 
 }); // end of document ready

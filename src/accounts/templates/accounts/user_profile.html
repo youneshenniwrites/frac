@@ -1,11 +1,13 @@
+{% extends "base.html" %}
 {% load static %}
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script type="text/javascript" src="{% static "/accounts/js/user-profile.js" %}"></script>
-
-<!--Ajax calls -->
+{% block content %}
 <div id="posts-user">
 
   <h1 id='username-id'>{{ object.username }}</h1>
-
+  <!--  My css for user profile -->
+  <link rel="stylesheet" type="text/css" href="{% static '/accounts/css/user-profile.css' %}" />
+  <!--  My jQuery for user's profile -->
+  <script type="text/javascript" src="{% static "/accounts/js/user-profile.js" %}"></script>
 </div>
+{% endblock content %}

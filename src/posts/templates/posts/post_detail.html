@@ -1,4 +1,17 @@
-<h4>{{post.user.username}}
-  {% if post.title %} | {{ post.title }} {% endif %}
-</h4>
-{{ post.content }}<hr>
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!--  Must be replaced with an ajax call -->
+<div id="post-container">
+
+  <h4><a href="{{ user.profile.get_absolute_url }}">{{post.user.username}}</a>
+    {% if post.title %} | {{ post.title }} {% endif %}
+  </h4>
+  {{ post.content }}
+
+  <!--  My css for posts list -->
+  <link rel="stylesheet" type="text/css" href="{% static '/posts/css/post-style.css' %}" />
+
+</div>
+{% endblock content %}

@@ -2,6 +2,7 @@ $(document).ready(function(){
 
   $('#username-id').hide();
   var userId = $('#username-id').html();
+  console.log(userId);
   var verb;
   var followersCountUp;
   var followersCountDown;
@@ -50,8 +51,8 @@ $(document).ready(function(){
 
          // if not my own profile, then toggle follow this user
         if (data.loggedIn !== data.username) {
-          $('#posts-user').append("<div class='hideMe'><a href='#' class='follow-user' user-id="
-          + data.username + ">" + test + "</a></div>");
+          $('#posts-user').append("<div class='hideMe'><button class='btn btn-default'><a href='#' class='follow-user' user-id="
+          + data.username + ">" + test + "</a></button></div>");
         };
 
         // Key infos about the user

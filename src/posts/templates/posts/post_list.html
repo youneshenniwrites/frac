@@ -1,8 +1,12 @@
+{% extends "base.html" %}
 {% load static %}
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script type="text/javascript" src="{% static "/posts/js/jquery.js" %}"></script>
+{% block content %}
+    <div id="posts-container">
+      <!--  My css for posts list -->
+      <link rel="stylesheet" type="text/css" href="{% static '/posts/css/post-style.css' %}" />
+      <!--  My jQuery for posts list -->
+      <script type="text/javascript" src="{% static "/posts/js/jquery.js" %}"></script>
 
-<div id="posts-container">
-
-</div>
+    </div>
+{% endblock content %}
