@@ -48,12 +48,11 @@ class UserProfile(models.Model):
     '''
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                 related_name='profile')
+    date_of_birth = models.DateField()
+    profile_photo = models.ImageField(blank=True)
     following = models.ManyToManyField(settings.AUTH_USER_MODEL,
                                         blank=True,
                                         related_name='followed_by')
-
-    # follow antonio mele social network
-    # must add a date of birth field and an optional image profile field.
 
     objects = UserProfileManager()
 
@@ -88,14 +87,15 @@ class UserProfile(models.Model):
                             kwargs={'username':self.user.username})
 
     def __str__(self):
-        return 'Username: {} [ Followers ({}); Following ({}) ]'.format(self.user.username,
+        return 'Followers ({}); Following ({})'.format(
                                           self.user.followed_by.all().count(),
-                                          self.following.all().count())
+                                          self.get_following().count()
+                                          )
 
 
 def post_save_user_receiver(sender, instance, created, *args, **kwargs):
     '''
-    Django signal to automatically create
+    Django signals to automatically create
     a user profile when a user object is created
     '''
     if created:

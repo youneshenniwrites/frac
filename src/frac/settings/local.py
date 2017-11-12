@@ -140,3 +140,15 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     )
 }
+
+# Serving Media files during development
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# Configuring a SMTP Email Service
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'henni1989younes@gmail.com'
+EMAIL_HOST_PASSWORD = 'alamo1905**'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'TestSite Team <noreply@example.com>'
