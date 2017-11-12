@@ -1,17 +1,17 @@
 {% extends "base.html" %}
-{% load static %}
+
 {% load crispy_forms_tags %}
 
-{% block title %} {{ block.super }} Register {% endblock title %}
+{% block title %} {{ block.super }} Sign Up {% endblock title %}
 
 {% block content %}
 <div class='row'>
-    <div class='col-sm-6 col-sm-offset-3'>
-        <h1>Register</h1>
+    <div class='col-sm-6 col-sm-offset-3 text-center'>
+        <h1>Sign Up</h1><hr>
         <form  class='form {% if form_class %}{{ form_class }}{% endif %}' method='POST' action="{% if action_url %}{{ action_url }}{% endif %}">
            {% csrf_token %}
             {{ form|crispy }}
-            <input class='btn btn-primary' type="submit" value="Register" />
+            <button class='btn btn-primary'>Sign Up</button>
         </form>
     </div>
 </div>

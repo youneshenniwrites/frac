@@ -48,7 +48,7 @@ class UserProfile(models.Model):
     '''
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                 related_name='profile')
-    date_of_birth = models.DateField()
+    date_of_birth = models.DateField(blank=True, null=True)
     profile_photo = models.ImageField(blank=True)
     following = models.ManyToManyField(settings.AUTH_USER_MODEL,
                                         blank=True,

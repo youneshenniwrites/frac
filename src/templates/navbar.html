@@ -17,9 +17,10 @@
           {% if request.user.is_authenticated %}
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a href="{{ request.user.profile.get_absolute_url }}">
-                {{ request.user.username }}
-                <span class="fa fa-user-o fa-lg"></span>
+              <a href="{{ request.user.profile.get_absolute_url }}">      
+                <span class="fa fa-user-o fa-lg">
+                  {{ request.user.username }}
+                </span>
               </a>
             </li>
             <li>

@@ -1,12 +1,11 @@
 {% extends "base.html" %}
-{% load static %}
 
-{% block title %} {{ block.super }} Login {% endblock title %}
+{% block title %} {{ block.super }} Sign In {% endblock title %}
 
 {% block content %}
 
 <div class="col-sm-6 col-sm-offset-3 text-center">
-  <h1>Welcome to Frac</h1>
+  <h1>Sign In</h1><hr>
 
   {% if form.errors %}
   <p>Your username and password didn't match. Please try again.</p>
@@ -34,10 +33,10 @@
     {{ form.password }}
   </div>
 
-  <button type="submit" class="btn btn-default">Login</button>
+  <button type="submit" class="btn btn-default">Sign In</button>
   <input type="hidden" name="next" value="{{ next }}" />
   </form>
-<p>Not a member yet ?! Register <a href="{% url 'register' %}">here</a>.</p>
+<p>Not a member yet ?! Sign Up <a href="{% url 'register' %}">here</a>.</p>
 <p>Can't Remember you password ?! Reset password <a href="{% url 'password_reset' %}">here</a>.</p>
 </div>
 

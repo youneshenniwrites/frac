@@ -11,10 +11,13 @@ User = get_user_model()
 
 class UserRegisterForm(forms.Form):
     username = forms.CharField(max_length=20)
+    date_of_birth = forms.DateField(widget=forms.SelectDateWidget(years=range(2017, 1900, -1)))
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)
     password_again = forms.CharField(label='Confirm Password',
                                         widget=forms.PasswordInput)
+
+    # need to build a validation method for date of date_of_birth
 
     def clean_password_again(self):
         '''
