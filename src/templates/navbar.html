@@ -10,14 +10,18 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{% url 'posts:list' %}">Frac</a>
+
+          <a class="navbar-brand" href="{% url 'posts:list' %}">
+            Frac
+            <span class="fa fa-trophy"></span>
+          </a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           {% if request.user.is_authenticated %}
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a href="{{ request.user.profile.get_absolute_url }}">      
+              <a href="{{ request.user.profile.get_absolute_url }}">
                 <span class="fa fa-user-o fa-lg">
                   {{ request.user.username }}
                 </span>

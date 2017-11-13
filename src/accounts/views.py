@@ -23,6 +23,7 @@ class UserRegisterView(FormView):
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password')
         new_user = User.objects.create(username=username, email=email)
+        # hashes the password 
         new_user.set_password(password)
         new_user.save()
 

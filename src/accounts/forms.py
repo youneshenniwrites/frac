@@ -19,15 +19,28 @@ class UserRegisterForm(forms.Form):
     password_again = forms.CharField(label='Confirm Password',
                                         widget=forms.PasswordInput)
 
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username__iexact=username).exists():
+            raise forms.ValidationError('Username already exists')
+        return username
+
     def clean_date_of_birth(self):
         '''
         Only accept users aged 13 and above
         '''
+        userAge = 13
         dob = self.cleaned_data.get('date_of_birth')
         today = date.today()
-        if (dob.year + 13, dob.month, dob.day) > (today.year, today.month, today.day):
-            raise forms.ValidationError('Users must be aged 13 years old and above.')
+        if (dob.year + userAge, dob.month, dob.day) > (today.year, today.month, today.day):
+            raise forms.ValidationError('Users must be aged {} years old and above.'.format(userAge))
         return dob
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email__iexact=email).exists():
+            raise forms.ValidationError('A user has already registered using this email')
+        return email
 
     def clean_password_again(self):
         '''
@@ -38,15 +51,3 @@ class UserRegisterForm(forms.Form):
         if password != password_again:
             raise forms.ValidationError('Passwords must match')
         return password_again
-
-    def clean_username(self):
-        username = self.cleaned_data.get('username')
-        if User.objects.filter(username__iexact=username).exists():
-            raise forms.ValidationError('Username already exists')
-        return username
-
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        if User.objects.filter(email__iexact=email).exists():
-            raise forms.ValidationError('A user has already registered using this email')
-        return email

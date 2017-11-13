@@ -108,6 +108,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Custom authentication backends
+AUTHENTICATION_BACKENDS = (
+                        'django.contrib.auth.backends.ModelBackend',
+                        'accounts.authentication.EmailAuthBackend',
+                        )
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
@@ -146,7 +151,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Configuring a SMTP Email Service
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.gmail.com'  # must upgrade to high traffic service in production
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'henni1989younes@gmail.com'
 EMAIL_HOST_PASSWORD = 'alamo1905**'
