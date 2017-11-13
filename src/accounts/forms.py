@@ -2,6 +2,8 @@
 Users must register an account to start using this app.
 '''
 
+from datetime import date
+
 from django import forms
 from django.contrib.auth import get_user_model
 
@@ -17,13 +19,20 @@ class UserRegisterForm(forms.Form):
     password_again = forms.CharField(label='Confirm Password',
                                         widget=forms.PasswordInput)
 
-    # need to build a validation method for date of date_of_birth
+    def clean_date_of_birth(self):
+        '''
+        Only accept users aged 13 and above
+        '''
+        dob = self.cleaned_data.get('date_of_birth')
+        today = date.today()
+        if (dob.year + 13, dob.month, dob.day) > (today.year, today.month, today.day):
+            raise forms.ValidationError('Users must be aged 13 years old and above.')
+        return dob
 
     def clean_password_again(self):
         '''
         we must ensure that both passwords are identical
         '''
-
         password = self.cleaned_data.get('password')
         password_again = self.cleaned_data.get('password_again')
         if password != password_again:
