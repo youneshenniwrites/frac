@@ -1,18 +1,16 @@
-'''
-Users must register an account to start using this app.
-'''
-
 from datetime import date
 
-from django import forms
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
-
+from django.contrib.auth.forms import UserCreationForm
+from django import forms
 
 User = get_user_model()
 
 
 class UserRegisterForm(UserCreationForm):
+    '''
+    Users must register an account to start using this app.
+    '''
     date_of_birth = forms.DateField(widget=forms.SelectDateWidget(years=range(2017, 1900, -1)))
     email = forms.EmailField(required=True)
 

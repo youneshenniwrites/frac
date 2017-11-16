@@ -14,7 +14,7 @@ from django.contrib.auth.views import (
         PasswordResetCompleteView
 )
 
-from accounts.views import register, activate #UserRegisterView
+from accounts.views import (register, activate)
 
 
 urlpatterns = [
@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^posts/', include('posts.urls', namespace='posts')),
 
     # sign up with email confirmation
-    url(r'^register/$', register, name='register'),
+    url(r'^register/', register, name='register'),
     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         activate, name='activate'),
 

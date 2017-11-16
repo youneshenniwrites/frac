@@ -88,10 +88,11 @@ class UserProfile(models.Model):
                             kwargs={'username':self.user.username})
 
     def __str__(self):
-        return 'Followers ({}); Following ({})'.format(
-                                          self.user.followed_by.all().count(),
-                                          self.get_following().count()
-                                          )
+        return '{}: ({}) Followers and Following ({})'.format(
+                                            self.user.username,
+                                            self.user.followed_by.all().count(),
+                                            self.get_following().count()
+                                            )
 
 
 def post_save_user_receiver(sender, instance, created, *args, **kwargs):
