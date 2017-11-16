@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<div class="col-sm-6 col-sm-offset-3 text-center">
+<!-- <div class="col-sm-6 col-sm-offset-3 text-center"> -->
   <h1>Sign In</h1><hr>
 
   {% if form.errors %}
@@ -38,6 +38,6 @@
   </form>
 <p>Not a member yet ?! Sign Up <a href="{% url 'register' %}">here</a>.</p>
 <p>Can't Remember you password ?! Reset password <a href="{% url 'password_reset' %}">here</a>.</p>
-</div>
+<!-- </div> -->
 
 {% endblock content %}

@@ -14,7 +14,7 @@ from django.contrib.auth.views import (
         PasswordResetCompleteView
 )
 
-from accounts.views import UserRegisterView
+from accounts.views import register, activate #UserRegisterView
 
 
 urlpatterns = [
@@ -23,6 +23,11 @@ urlpatterns = [
     url(r'^api/posts/', include('posts.api.urls', namespace='posts-api')),
     url(r'^profiles/', include('accounts.urls', namespace='profiles')),
     url(r'^posts/', include('posts.urls', namespace='posts')),
+
+    # sign up with email confirmation
+    url(r'^register/$', register, name='register'),
+    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        activate, name='activate'),
 
     # Django built in login, logout, password change and reset class-based views
     url('login/', LoginView.as_view(template_name='accounts/login.html'), name='login'),
@@ -47,7 +52,7 @@ urlpatterns = [
         name='password_reset_complete'),
 
     # custom registration url for users
-    url(r'^register/', UserRegisterView.as_view(), name='register'),
+    #url(r'^register/', UserRegisterView.as_view(), name='register'),
 ]
 
 # serving static and media files in development

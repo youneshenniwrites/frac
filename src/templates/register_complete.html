@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %} {{ block.super }} Sign Up {% endblock title %}
+
+{% block content %}
+
+  <h1>Registration complete!</h1><hr>
+  <p class="lead">
+    Thank you for your email confirmation. <br>
+    Now you can login your account <a href="{% url 'login' %}">here</a>.
+  </p>
+
+{% endblock content %}

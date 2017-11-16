@@ -5,8 +5,8 @@
 {% block title %} {{ block.super }} Sign Up {% endblock title %}
 
 {% block content %}
-<div class='row'>
-    <div class='col-sm-6 col-sm-offset-3 text-center'>
+<!-- <div class='row'>
+    <div class='col-sm-6 col-sm-offset-3 text-center'> -->
         <h1>Sign Up</h1><hr>
         <form  class='form {% if form_class %}{{ form_class }}{% endif %}' method='POST' action="{% if action_url %}{{ action_url }}{% endif %}">
            {% csrf_token %}
@@ -16,7 +16,7 @@
         <p>
           If you are a member sign in <a href="{% url 'login' %}">here</a>
         </p>
-    </div>
-</div>
+    <!-- </div>
+</div> -->
 
 {% endblock content %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %} {{ block.super }} Sign Up {% endblock title %}
+
+{% block content %}
+
+  <h1>Registration Failed!</h1><hr>
+  <p class="lead">
+    Your activation link is not valid. <br>
+    Please try to Sign Up again <a href="{% url 'register' %}">here</a>.
+  </p>
+
+{% endblock content %}

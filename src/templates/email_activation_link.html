@@ -1,0 +1,9 @@
+{% autoescape off %}
+Dear {{ user.username }},
+We are very happy to welcome you in the Frac community.
+To activate your account, click on the link below:
+
+http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+
+Team Frac.
+{% endautoescape %}
