@@ -50,6 +50,7 @@ class UsersListProfileSerializer(serializers.ModelSerializer):
             'username',
             'first_name',
             'last_name',
+            'email',
             'all_myLikes',
             'all_myFollowers',
             'iFollow',
