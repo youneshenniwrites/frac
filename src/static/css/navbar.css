@@ -1,0 +1,17 @@
+body {
+    padding-top: 73px;
+}
+.navbar-brand {
+  font-family: 'Pacifico';
+  color:white;
+  font-size: 30px;
+}
+
+.navbar-center
+{
+    position: absolute;
+    /*width: 100%;*/
+    left: 223px;
+    text-align: center;
+    margin:0 auto;
+}

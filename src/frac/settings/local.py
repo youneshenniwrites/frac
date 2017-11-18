@@ -151,7 +151,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 EMAIL_HOST = 'smtp.gmail.com'  # must upgrade to high traffic service in production
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'henni1989younes@gmail.com'
-EMAIL_HOST_PASSWORD = 'alamo1905**'
+EMAIL_HOST_PASSWORD = 'password'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'The Frac Team <noreply@example.com>'
 

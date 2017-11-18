@@ -48,7 +48,6 @@ class UserDetailAPIVIew(generics.RetrieveAPIView):
         return context
 
 
-
 class FollowToggleAPIView(APIView):
     '''
     Uses the custom model manager for user toggle follow

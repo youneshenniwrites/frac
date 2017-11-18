@@ -91,3 +91,4 @@ lib/
 include/
 bin/
 static-serve/
+frac/settings_secret.py

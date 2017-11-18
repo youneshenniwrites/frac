@@ -19,6 +19,31 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           {% if request.user.is_authenticated %}
+          <!--  RTG dashboard -->
+          <ul class="nav navbar-nav navbar-center">
+            <li>
+              <a href="#">
+                <span id='R'>
+                  <p>Reputation</p>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span id='T'>
+                  <p>Trophees</p>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span id='G'>
+                  <p>Gifts</p>
+                </span>
+              </a>
+            </li>
+          </ul>
+          <!--  User profile -->
           <ul class="nav navbar-nav navbar-right">
             <li>
               <a href="{{ request.user.profile.get_absolute_url }}">
@@ -52,14 +77,6 @@
 </div>
 
 <!--  Navbar Style CSS -->
-<style>
-body {
-    padding-top: 73px;
-}
-.navbar-brand
-{
-  font-family: 'Pacifico';
-  color:white;
-  font-size: 30px;
-}
-</style>
+<link rel="stylesheet" type="text/css" href="{% static 'css/navabr.css' %}" />
+<!--  Navbar jQuery -->
+<script type="text/javascript" src="{% static "/js/navbar.js" %}"></script>
