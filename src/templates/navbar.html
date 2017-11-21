@@ -39,7 +39,7 @@
             <li>
               <a href="#">
                 <span id='G'>
-                  <p>Gifts</p>
+                  <p class="lead">Gifts</p>
                 </span>
               </a>
             </li>
@@ -47,7 +47,7 @@
           <!--  User profile -->
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a href="{{ request.user.profile.get_absolute_url }}">
+              <a id='logged_username' href="{{ request.user.profile.get_absolute_url }}">
                 <span class="fa fa-user-o fa-lg">
                   {{ request.user.username }}
                 </span>
@@ -98,6 +98,23 @@ body {
     margin:0 auto;
 }
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#G p').hide();
+    var username = $('#logged_username span').text().trim();
+    var url = '/api/profiles/' + username;
+    $.ajax({
+      method: 'GET',
+      url: url,
+      success: function(data){
+        var gift = data.list_of_gifts[1];
+        //console.log(data.list_of_gifts[1]);
+        $('#G').text(gift)
+      }
+    });
+  })
+</script>
 <!--  Navbar Style CSS -->
 <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/navabr.css' %}" /> -->
 <!--  Navbar jQuery -->

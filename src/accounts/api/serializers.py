@@ -1,9 +1,9 @@
 """
 Counter class takes a list of items and outputs a dictionary
 with number of occurence (value) of each item (keys) in the list
-
-from collections import Counter
 """
+from collections import Counter
+
 from itertools import chain # returns multiple items in a list comprehension
 
 from django.contrib.auth import get_user_model
@@ -25,8 +25,8 @@ profile_detail_url = HyperlinkedIdentityField(
         )
 
 gift_for_likes =   {
-                    1: 'Stamp', 2: 'Mug', 3: 'Sunglasses', 4: 'Jacket',
-                    5: 'Hat', 64: 'Shoes', 128: 'Bag', 256: 'Sliver Ring',
+                    2: 'Stamp', 4: 'Mug', 8: 'Sunglasses', 16: 'Jacket',
+                    32: 'Hat', 64: 'Shoes', 128: 'Bag', 256: 'Sliver Ring',
                     512: 'Gold Ring', 1024: 'Tesla', 2048: 'Jet'
                     }
 
@@ -142,7 +142,8 @@ class UserSingleProfileSerializer(UsersListProfileSerializer):
         for i in final_matches:
             posts_likes.append(likes_for_gift.get(i))
             latest_gift_series = gift_for_likes.get(max(posts_likes))
-        return final_matches, latest_gift_series
+            gifts_and_numbers = Counter(final_matches)
+        return gifts_and_numbers, str(posts_likes.count(max(posts_likes))) + " " + latest_gift_series
 
     class Meta:
         model = User

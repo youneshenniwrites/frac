@@ -2,7 +2,7 @@ $(document).ready(function(){
 
   $('#username-id').hide();
   var userId = $('#username-id').html();
-  console.log(userId);
+  //console.log(userId);
   var verb;
   var followersCountUp;
   var followersCountDown;
