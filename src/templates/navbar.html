@@ -1,3 +1,4 @@
+{% load static %}
 <div class="row">
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
@@ -12,8 +13,8 @@
           </button>
 
           <a class="navbar-brand" href="{% url 'posts:list' %}">
-            Frac
-            <span class="fa fa-trophy"></span>
+              Frac
+            <span class="fa fa-trophy fa-lg"></span>
           </a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -74,9 +75,30 @@
       </div><!-- /.container-fluid -->
     </div>
   </nav>
+
 </div>
 
+<style>
+/* to be fixed */
+body {
+    padding-top: 73px;
+}
+.navbar-brand {
+  font-family: 'Pacifico';
+  font-size: 145px;
+  color:white;
+}
+
+.navbar-center
+{
+    position: absolute;
+    /*width: 100%;*/
+    left: 223px;
+    text-align: center;
+    margin:0 auto;
+}
+</style>
 <!--  Navbar Style CSS -->
-<link rel="stylesheet" type="text/css" href="{% static 'css/navabr.css' %}" />
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'css/navabr.css' %}" /> -->
 <!--  Navbar jQuery -->
-<script type="text/javascript" src="{% static "/js/navbar.js" %}"></script>
+<!-- <script type="text/javascript" src="{% static "/js/navbar.js" %}"></script> -->

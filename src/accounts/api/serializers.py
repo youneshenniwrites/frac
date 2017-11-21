@@ -1,8 +1,9 @@
 """
 Counter class takes a list of items and outputs a dictionary
 with number of occurence (value) of each item (keys) in the list
-"""
+
 from collections import Counter
+"""
 from itertools import chain # returns multiple items in a list comprehension
 
 from django.contrib.auth import get_user_model
@@ -14,6 +15,8 @@ from rest_framework.serializers import HyperlinkedIdentityField
 from accounts.models import UserProfile
 from posts.models import Post
 
+from .gifts import reverse
+
 User = get_user_model()
 
 profile_detail_url = HyperlinkedIdentityField(
@@ -22,10 +25,12 @@ profile_detail_url = HyperlinkedIdentityField(
         )
 
 gift_for_likes =   {
-                    2: 'Stamp', 4: 'Mug', 8: 'Sunglasses', 16: 'Jacket',
-                    32: 'Hat', 64: 'Shoes', 128: 'Bag', 256: 'Sliver Ring',
+                    1: 'Stamp', 2: 'Mug', 3: 'Sunglasses', 4: 'Jacket',
+                    5: 'Hat', 64: 'Shoes', 128: 'Bag', 256: 'Sliver Ring',
                     512: 'Gold Ring', 1024: 'Tesla', 2048: 'Jet'
                     }
+
+likes_for_gift = reverse(gift_for_likes)
 
 
 class UsersListProfileSerializer(serializers.ModelSerializer):
@@ -33,10 +38,10 @@ class UsersListProfileSerializer(serializers.ModelSerializer):
     To be included in the posts api list and detail
     '''
     all_myFollowers = serializers.SerializerMethodField()
-    iFollow = serializers.SerializerMethodField()
-    all_myPosts = serializers.SerializerMethodField()
-    all_myLikes = serializers.SerializerMethodField()
-    profileApiURL = profile_detail_url
+    iFollow         = serializers.SerializerMethodField()
+    all_myPosts     = serializers.SerializerMethodField()
+    all_myLikes     = serializers.SerializerMethodField()
+    profileApiURL   = profile_detail_url
 
     def get_all_myFollowers(self, obj):
         return obj.followed_by.all().count()
@@ -73,24 +78,24 @@ class UsersListProfileSerializer(serializers.ModelSerializer):
 
 
 class UserSingleProfileSerializer(UsersListProfileSerializer):
-    all_myPosts_content = serializers.SerializerMethodField()
-    all_myFollowers_list = serializers.SerializerMethodField()
-    iFollow_list = serializers.SerializerMethodField()
-    followed_boolean = serializers.SerializerMethodField()
-    loggedIn = serializers.SerializerMethodField()
-    list_of_gifts = serializers.SerializerMethodField()
+    all_myPosts_content     = serializers.SerializerMethodField()
+    all_myFollowers_list    = serializers.SerializerMethodField()
+    iFollow_list            = serializers.SerializerMethodField()
+    followed_boolean        = serializers.SerializerMethodField()
+    loggedIn                = serializers.SerializerMethodField()
+    list_of_gifts           = serializers.SerializerMethodField()
 
     def get_all_myPosts_content(self, obj):
         '''
         displays a list of all my posts
         '''
-        return [chain.from_iterable((
+        return chain.from_iterable((
                                     f'Post ID: {post.id}',
                                     f'Post title: {post.title}',
                                     f'Post content: {post.content}',
                                     f'Post likes: {post.likes.all().count()}'
                                     )
-                                    for post in obj.profile.get_posts())]
+                                    for post in obj.profile.get_posts())
 
     def get_all_myFollowers_list(self, obj):
         '''
@@ -116,14 +121,28 @@ class UserSingleProfileSerializer(UsersListProfileSerializer):
         return 'error'
 
     def get_list_of_gifts(self, obj):
-        list_of_gifts = []
+        '''
+        Checks the likes for each post against the keys of gift dict.
+        Returns the gifts for likes and the latest biggest gift group
+        '''
+        matches = []
+        numLikes = []
+        final_matches = []
+        posts_likes = []
+
         for post in obj.profile.get_posts():
-            numLikes = post.likes.all().count()
-            # targets the type of gift for a given number of likes
+            numLikes.append(post.likes.all().count())
+        # logic for gift per post
+        for like in numLikes:
             for key in gift_for_likes.keys():
-                if numLikes >= key:
-                    list_of_gifts.append(gift_for_likes[key])
-        return Counter(list_of_gifts)
+                if like >= key:
+                    matches.append(key)
+            final_matches.append(gift_for_likes.get(matches[-1]))
+        # get the latest gift series
+        for i in final_matches:
+            posts_likes.append(likes_for_gift.get(i))
+            latest_gift_series = gift_for_likes.get(max(posts_likes))
+        return final_matches, latest_gift_series
 
     class Meta:
         model = User
@@ -140,5 +159,5 @@ class UserSingleProfileSerializer(UsersListProfileSerializer):
             'iFollow_list',
             'followed_boolean',
             'loggedIn',
-            'list_of_gifts',
+            'list_of_gifts'
         ]
