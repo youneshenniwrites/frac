@@ -36,12 +36,17 @@
                 </span>
               </a>
             </li>
-            <li>
-              <a href="#">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                 <span id='G'>
-                  <p class="lead">Gifts</p>
+                  <p>Gifts</p>
                 </span>
+                <span class="caret"></span>
               </a>
+              <!--  display all list of user gifts -->
+              <ul class="dropdown-menu">
+                
+              </ul>
             </li>
           </ul>
           <!--  User profile -->
@@ -101,16 +106,25 @@ body {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
   $(document).ready(function(){
-    $('#G p').hide();
+
+    // $('#G').hide();
     var username = $('#logged_username span').text().trim();
     var url = '/api/profiles/' + username;
     $.ajax({
       method: 'GET',
       url: url,
       success: function(data){
-        var gift = data.list_of_gifts[1];
+        var latest_gifts = data.list_of_gifts[2];
+        var gifts = data.list_of_gifts[1];
+        var appenddata1 = "";
         //console.log(data.list_of_gifts[1]);
-        $('#G').text(gift)
+        $('#G').text(latest_gifts);
+        for (var i = 0; i < gifts.length; i++) {
+          //console.log(gifts.length); <a href="#">Action</a>
+          appenddata1 += "<li><a href='#'>" + gifts[i] + "</a></li><li role='separator' class='divider'></li>";
+          //$('.dropdown-menu').append(gifts[i]);
+        }
+        $('.dropdown-menu').append(appenddata1);
       }
     });
   })

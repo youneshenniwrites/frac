@@ -123,7 +123,7 @@ class UserSingleProfileSerializer(UsersListProfileSerializer):
     def get_list_of_gifts(self, obj):
         '''
         Checks the likes for each post against the keys of gift dict.
-        Returns the gifts for likes and the latest biggest gift group
+        Returns the gift for likes and the latest biggest gift group
         '''
         matches = []
         numLikes = []
@@ -143,7 +143,11 @@ class UserSingleProfileSerializer(UsersListProfileSerializer):
             posts_likes.append(likes_for_gift.get(i))
             latest_gift_series = gift_for_likes.get(max(posts_likes))
             gifts_and_numbers = Counter(final_matches)
-        return gifts_and_numbers, str(posts_likes.count(max(posts_likes))) + " " + latest_gift_series
+
+        return (gifts_and_numbers,
+                final_matches,
+                str(posts_likes.count(max(posts_likes))) + " " + latest_gift_series
+                )
 
     class Meta:
         model = User
