@@ -30,7 +30,7 @@ class PostManager(models.Manager):
 
 class Post(models.Model):
     '''
-    Users can post text and images to the news feed
+    Users can post: text, images and videos into the patform
     '''
     # each post has a unique user (creator)
     user = models.ForeignKey(User)

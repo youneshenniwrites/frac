@@ -133,11 +133,12 @@ class UserSingleProfileSerializer(UsersListProfileSerializer):
         for post in obj.profile.get_posts():
             numLikes.append(post.likes.all().count())
         # logic for gift per post
-        for like in numLikes:
-            for key in gift_for_likes.keys():
-                if like >= key:
-                    matches.append(key)
-            final_matches.append(gift_for_likes.get(matches[-1]))
+        if len(numLikes) != 0:
+            for like in numLikes:
+                for key in gift_for_likes.keys():
+                    if like >= key:
+                        matches.append(key)
+                        final_matches.append(gift_for_likes.get(matches[-1]))
         # get the latest gift series
         for i in final_matches:
             posts_likes.append(likes_for_gift.get(i))
