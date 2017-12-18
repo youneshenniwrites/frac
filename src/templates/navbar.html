@@ -20,61 +20,77 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           {% if request.user.is_authenticated %}
-          <!--  RTG dashboard -->
-          <ul class="nav navbar-nav navbar-center">
-            <li>
-              <a href="#">
-                <span id='R'>
-                  <p>Reputation</p>
-                </span>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <span id='T'>
-                  <p>Trophees</p>
-                </span>
-              </a>
-            </li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                <span id='G'>
-                  <p>Gifts</p>
-                </span>
-                <span class="caret"></span>
-              </a>
-              <!--  display all list of user gifts -->
-              <ul class="dropdown-menu">
+            <!--  RTG dashboard -->
+            <ul class="nav navbar-nav navbar-center">
+              <li>
+                <a href="#">
+                  <span class="fa fa-clock-o fa-lg" id='timer'>
+                    <p>Timer</p>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="fa fa-star fa-lg" id='R'>
+                    <p>Reputation</p>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="fa fa-trophy fa-lg" id='T'>
+                    <p>Trophees</p>
+                  </span>
+                </a>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <span class="fa fa-gift fa-lg" id='G'>
+                    <p>Gifts</p>
+                  </span>
+                  <span class="caret"></span>
+                </a>
 
-              </ul>
-            </li>
-          </ul>
-          <!--  User profile -->
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-              <a id='logged_username' href="{{ request.user.profile.get_absolute_url }}">
-                <span class="fa fa-user-o fa-lg">
-                  {{ request.user.username }}
-                </span>
-              </a>
-            </li>
-            <li>
-              <a href="{% url 'password_change' %}">
-                <span class="fa fa-cog fa-lg"></span>
-              </a>
-            </li>
-            <li>
-              <a href="{% url 'logout' %}">
-                <span class="fa fa-power-off fa-lg"></span>
-              </a>
-            </li>
-          </ul>
+                <!--  display all list of user gifts -->
+                <ul id='list-gifts' class="dropdown-menu">
+
+                </ul>
+              </li>
+              <!--  User profile -->
+
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <span class="fa fa-user-o fa-lg">
+                  </span>
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a id='logged_username' href="{{ request.user.profile.get_absolute_url }}">
+                      <p>{{ request.user.username }}</p>
+                    </a>
+                  </li>
+                  <li role='separator' class='divider'></li>
+                  <li>
+                    <a href="{% url 'password_change' %}">
+                      <span class="fa fa-cog fa-lg"></span> Change password
+                    </a>
+                  </li>
+                  <li role='separator' class='divider'></li>
+                  <li>
+                    <a href="{% url 'logout' %}">
+                      <span class="fa fa-power-off fa-lg"></span> Logout
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
 
           {% else %}
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="{% url 'login' %}">Login</a></li>
-             <li><a href="{% url 'register' %}">Register</a></li>
-          </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="{% url 'login' %}">Login</a></li>
+               <li><a href="{% url 'register' %}">Register</a></li>
+            </ul>
           {% endif %}
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
@@ -108,7 +124,7 @@ body {
   $(document).ready(function(){
 
     // $('#G').hide();
-    var username = $('#logged_username span').text().trim();
+    var username = $('#logged_username p').text().trim();
     var url = '/api/profiles/' + username;
     $.ajax({
       method: 'GET',
@@ -118,13 +134,14 @@ body {
         var gifts = data.list_of_gifts[1];
         var appenddata1 = "";
         //console.log(data.list_of_gifts[1]);
-        $('#G').text(latest_gifts);
+        //$('#G').text(latest_gifts);
         for (var i = 0; i < gifts.length; i++) {
           //console.log(gifts.length); <a href="#">Action</a>
-          appenddata1 += "<li><a href='#'>" + gifts[i] + "</a></li><li role='separator' class='divider'></li>";
-          //$('.dropdown-menu').append(gifts[i]);
+          appenddata1 += "<li><a href='#'>" + gifts[i]
+          + "</a></li><li role='separator' class='divider'></li>";
+          //$('#list-gifts').append(gifts[i]);
         }
-        $('.dropdown-menu').append(appenddata1);
+        $('#list-gifts').append(appenddata1);
       }
     });
   })
